@@ -13,7 +13,7 @@ public class CustomMethodSecurityExpressionHandler extends DefaultMethodSecurity
 
     @Override
     protected MethodSecurityExpressionOperations createSecurityExpressionRoot(Authentication authentication, MethodInvocation invocation) {
-        final hu.indicium.dev.ledenadministratie.config.CustomMethodSecurityExpressionRoot root = new hu.indicium.dev.ledenadministratie.config.CustomMethodSecurityExpressionRoot(authentication);
+        final CustomMethodSecurityExpressionRoot root = new CustomMethodSecurityExpressionRoot(authentication);
         root.setPermissionEvaluator(getPermissionEvaluator());
         root.setTrustResolver(this.trustResolver);
         root.setRoleHierarchy(getRoleHierarchy());

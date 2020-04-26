@@ -4,6 +4,7 @@ package hu.indicium.eventmanager.event;
 import hu.indicium.eventmanager.event.dto.EventDTO;
 import hu.indicium.eventmanager.util.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -31,6 +32,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @PreAuthorize("hasPermission('write:event')")
     public EventDTO addEvent(EventDTO eventDTO) {
         Event event = EventMapper.map(eventDTO);
         event.setId(null);
@@ -39,6 +41,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @PreAuthorize("hasPermission('write:event')")
     public EventDTO updateEvent(EventDTO eventDTO) {
         getEventById(eventDTO.getId());
         Event event = EventMapper.map(eventDTO);
@@ -47,6 +50,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @PreAuthorize("hasPermission('delete:event')")
     public void deleteEventById(long eventId) {
         Event event = getEventById(eventId);
         eventRepository.delete(event);

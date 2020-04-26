@@ -13,6 +13,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static hu.indicium.eventmanager.util.BaseUrl.API_V1;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -32,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/events").permitAll()
-                .antMatchers(HttpMethod.GET, "/events/*").permitAll()
+                .antMatchers(HttpMethod.GET, API_V1 + "/events").permitAll()
+                .antMatchers(HttpMethod.GET, API_V1 + "/events/*").permitAll()
                 .anyRequest().authenticated();
     }
 

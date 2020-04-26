@@ -28,7 +28,7 @@ deploy:
   provider: script
   script:
     echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u "$DOCKER_USER" --password-stdin;
-    docker build -t docker.pkg.github.com/svindicium/eventmanger-api/eventmanager-api:$TAG .;
+    docker build -t docker.pkg.github.com/svindicium/eventmanager-api/eventmanager-api:$TAG .;
     docker push docker.pkg.github.com/svindicium/eventmanager-api/eventmanager-api:$TAG;
   on:
     all_branches: true

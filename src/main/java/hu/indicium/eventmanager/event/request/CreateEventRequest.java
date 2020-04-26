@@ -1,26 +1,21 @@
 package hu.indicium.eventmanager.event.request;
 
+import hu.indicium.eventmanager.event.EventStatus;
+
+import javax.validation.constraints.NotBlank;
 import java.util.*;
 
-public class EventRequest {
-    private Long id;
+public class CreateEventRequest {
     private Date startDate;
     private Date endDate;
+    @NotBlank
     private String slug;
-    private String status;
+    private EventStatus status;
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
-    private ArrayList<String> location;
     private String url;
-    private ArrayList<String> categories;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Date getStartDate() {
         return startDate;
@@ -46,11 +41,11 @@ public class EventRequest {
         this.slug = slug;
     }
 
-    public String getStatus() {
+    public EventStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(EventStatus status) {
         this.status = status;
     }
 
@@ -70,33 +65,11 @@ public class EventRequest {
         this.description = description;
     }
 
-    public ArrayList<String> getLocation() {
-        return location;
-    }
-
-    public void setLocation(ArrayList<String> location) {
-        this.location = location;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public ArrayList<String> getCategories() {
-        return this.categories;
-    }
-
-    public void setCategories(ArrayList<String> categories) {
-        this.categories = categories;
-    }
-
-    public void addCategory(String category) {
-        if (!this.categories.contains(category)) {
-            this.categories.add(category);
-        }
     }
 }

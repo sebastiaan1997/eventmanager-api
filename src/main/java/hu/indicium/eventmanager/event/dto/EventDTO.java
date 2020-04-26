@@ -1,15 +1,10 @@
-package hu.indicium.eventmanager.event;
+package hu.indicium.eventmanager.event.dto;
 
-import java.util.*;
+import hu.indicium.eventmanager.event.EventStatus;
 
-import javax.persistence.*;
+import java.util.Date;
 
-@Entity
-public class Event {
-
-    @Id
-    @SequenceGenerator(name = "event_id_generator", sequenceName = "event_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_id_generator")
+public class EventDTO {
     private Long id;
     private Date startDate;
     private Date endDate;

@@ -11,7 +11,7 @@
     <groupId>hu.indicium</groupId>
     <artifactId>eventmanager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>eventmanager</name>
     <description>Indicium event manager API</description>
 

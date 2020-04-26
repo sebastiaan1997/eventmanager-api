@@ -7,6 +7,12 @@ jdk: openjdk11
 git:
   depth: 9999999
 
+env:
+  global:
+    - secure: "glfvdxRGpgTltd2VuI6jGFc7yATlDh2OkxDsJTQkEO5SMTCueswOjivpW/8xyXYQm3jqCCsAjsEHpmjOTG6I5yHdfnTwG3oLgZ2k/3lQC9yOeRfN4xww8Mac+44Cs1UzPj8FKVzGbXE3LnlM4MNGKTlSon4W9zXgbxmVYvKGFsl9HXKyTO21EGoN0SZEQ4U3iTnp6ytWBxZrfw1jUASUwX9aXOY9DUVYxweSLXeqZSjBG8/yNPMS6l9HwfKvxchCZXM5NcOth1nnYyDmITvO7etEFPSb22avrGdidVdi6DmWl4ioliRCGxkxAT7+Qb4CfQqwuZmJ/6/ChQjSSnmLQuEBOQi2Tz+AJoGjiElMxzABupstQ0ENW6C9FoidVedtX/W5grOyxDvKS6cWcQPOHRvOZpVDdcxveVvRx9BAysHe4ILslSl92HkAu4uhBG3AcXnMqLMmg3ZjKUPJi4YoNK2xSNWWULkJHItmy2JZHdgwZt4BilqzGe4T+1v8FejvrI+yTz8fyaq+9OB5x9Nqc97HQTIB/iD1k61kOqdh386uIITqyyxJeuQiTf1tpAx6+s4x5ptR5YmeeK94mWAGBEZnjv78Joq2ULjBUGnpKeUfapqbotyBOsiuaiT3geD6JYDnagGAtI0GaMjVFD5//K/IS3f6xabwhGGL6NVmX1I="
+    - secure: "IvnHfpDALyy6/ezLAsBFFFbkqUeLxch8jGPFLldQC8LjdupFTVAJ9Yf5KAfwruJXNOKPYvXCyUmm3rBvsmhf3rbYMOwzb8jEu4xBcrj4TV0HKmnkJagTn6VsjP8J1in98YSatLhochfKCQ0F7B26k3/xEcgYw9gqVcUAFjib2wTOwws0c8yGEtWIABdwDuKLJQz42CEL5HxtITlwDaHcjfo42T/HTBk9RSYCe3pWoY7p+l8hLE95aQ2zSApSDArTT0huVKILnrMABNKHXq1fYvP9FqR5pHfjv8e80k1yNDrGZ6Br+Bbxm2JQSfcx/vsW1g45zXvu/ewHQ9pOx4N6huSbtPO9HVD532slXki2nfZDVSJ/x4OqsVEsvdPnZLuFZzgIEVWPOQEHQMTWQyIl7QcVcvlbhQTR/cSey3V0PcJFSD9l3Se0Za3xYwfMdKNhIQ9R1mlwN4Cqg8R7UwLqlt+lWp/Isj/7wpMW0gMyG8gm17UCGoVxXe5Eci7GRpzYfuknLG37c7qVfh3fP94p2cAKcMP3K6MOaQP1gceAGuFlrwiWNLd8kgnatVbgHTS+sXX0EPCLyQIH+7R+QJXjF4pV2zXBThITYcNhuqXlIdXvtTS0mZYH8s2SJR+dUcwVGfdylhvMjElFM4hK8kgHlAwNGiJBvvPuVAcOp29PW0I="
+    - secure: "N2GosIHQN5qBxjDpusNARdq8q0upVcFRtFGNB0Ur4qvT2iVBWGzD0xmp2NGJ9IcVyH+9wZn+3C4fZJNFikK16+/eJVMrAa97DBZjA+tqiwZV1QYLg0ZWFd50jLqm0Y4bcZe+RhIEXAeMWDFynPuqLgcqqebY6sU9QxfPv3Mzhl4DLorMw7IT/C5tpoFmsOH8rrKcm2DJ7zI/NtWZfPVSt9F147VAFKwCbqzU1NAsFt61WwkEeao0mRC+G1YFguimgVXTwHpeP5lWwFaIan2UoFqkNgXU17pSHX4UUnlc/s50OAnkcFP8mefeVaLrlLoyYxNK8EUtVS9hsk1pQecjnpYzhoHb6jJMQmE6aCzifJh21yjIhadtYHn6keI4kLBklQDC+41lDm061XVd+ejyBU5GsB8XixnVixRVqHuB6jUbMH/IuY+zI9tNQmAZdQCd2dSGG/3B9nmdBTDIdL3SlWCUlGyZigV0Fo3Q/CgARVhHNO1N7b/K0AEdnwQAmCQlyEyMuwZGcYsQOtgJI2pk38mtUjExssFhq80x3gTIKt0YPQAf1DmNYR0SyNT/+uDEaxx1ZVJS2LAK7XnFgLgZEQ05NtLwsi1emRXFgziHS94U2bakhan+hfbo9u2H33xCo6cNM3lcRgHkxhK9F5cDAfbzRtM+yKvYugMdHR3wjTg="
+
 services:
   - docker
 
@@ -14,13 +20,20 @@ before_script:
   - bash ./.travis/install-postgres-11.sh
 
 script:
-  - ./gradlew build jacocoTestReport sonarqube
+  - ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -Dsonar.projectKey=$SONAR_KEY -Dsonar.organization=$SONAR_ORG -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_TOKEN -Dsonar.cpd.exclusions=**
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "stable"; elif [ "$TRAVIS_BRANCH" == "development" ]; then echo "latest"; else echo $TRAVIS_BRANCH | tr "
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+deploy:
+  skip_cleanup: true
+  provider: script
+  script:
+    echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u "$DOCKER_USER" --password-stdin;
+    docker build -t docker.pkg.github.com/svindicium/eventmanger-api/eventmanager-api:$TAG .;
+    docker push docker.pkg.github.com/svindicium/eventmanager-api/eventmanager-api:$TAG;
+  on:
+    all_branches: true
 
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'

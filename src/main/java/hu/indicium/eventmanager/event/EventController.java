@@ -25,7 +25,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Response<List<EventDTO>> getEvents() {
         List<EventDTO> eventDTOS = eventService.getAllEvents();
@@ -34,7 +34,7 @@ public class EventController {
             .build();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Response<EventDTO> createEvent(@RequestBody @Valid CreateEventRequest createEventRequest) {
         EventDTO eventDTO = map(createEventRequest);
@@ -44,7 +44,7 @@ public class EventController {
             .build();
     }
 
-    @PutMapping(value = "/{eventId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Response<EventDTO> updateEvent(@RequestBody @Valid CreateEventRequest createEventRequest, @PathVariable Long eventId) {
         EventDTO eventDTO = map(createEventRequest);
@@ -55,7 +55,7 @@ public class EventController {
             .build();
     }
 
-    @DeleteMapping(value = "/{eventId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Response<?> deleteEvent(@PathVariable Long eventId) {
         eventService.deleteEventById(eventId);

@@ -1,17 +1,15 @@
 package hu.indicium.eventmanager.event;
 
-import java.util.*;
-
 import hu.indicium.eventmanager.event.dto.EventDTO;
+import hu.indicium.eventmanager.event.request.CreateEventRequest;
 import hu.indicium.eventmanager.util.Response;
 import hu.indicium.eventmanager.util.ResponseBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import hu.indicium.eventmanager.event.request.*;
-
 import javax.validation.Valid;
+import java.util.List;
 
 import static hu.indicium.eventmanager.util.BaseUrl.API_V1;
 
@@ -31,6 +29,15 @@ public class EventController {
         List<EventDTO> eventDTOS = eventService.getAllEvents();
         return ResponseBuilder.ok()
             .data(eventDTOS)
+            .build();
+    }
+
+    @GetMapping(value = "/{eventId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public Response<EventDTO> getEvent(@PathVariable Long eventId) {
+        EventDTO event = eventService.findEventById(eventId);
+        return ResponseBuilder.ok()
+            .data(event)
             .build();
     }
 
